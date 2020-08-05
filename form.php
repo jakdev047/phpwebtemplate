@@ -1,3 +1,6 @@
+<?php
+   header('X-XSS-Protection:0');
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,17 +28,26 @@
                   Lorem ipsum dolor, sit amet consectetur adipisicing elit. Libero ipsa veritatis, nesciunt tempora ducimus fuga? Nobis iusto, iure cupiditate, deleniti labore ab repellendus modi consequatur nulla ex facilis quas quia adipisci itaque error ut, distinctio alias quae repellat totam! Provident impedit corporis excepturi. Beatae perferendis saepe, blanditiis qui consequuntur ipsam!
                </p>
 
-               <h4>
-                  <?php if( isset($_POST['fname']) && !empty($_POST['fname']) ) { ?>
-                  First Name: <?php echo $_POST['fname'] ?>
-                  <?php } ?>
-               </h4>
+               <?php
+                  // initialize
+                  $fname = '';
+                  $lname = '';
+                  
+                  // validation
+                  if( isset($_POST['fname']) && !empty($_POST['fname']) ) { 
+                     //$fname = htmlspecialchars($_POST['fname']);
+                     $fname = filter_input(INPUT_POST,'fname',FILTER_SANITIZE_STRING);
+                  } 
 
-               <h4>
-                  <?php if( isset($_POST['lname']) && !empty($_POST['lname']) ) { ?>
-                  Last Name: <?php echo $_POST['lname'] ?>
-                  <?php } ?>
-               </h4>
+                  if( isset($_POST['lname']) && !empty($_POST['lname']) ) { 
+                     $lname = filter_input(INPUT_POST,'lname',FILTER_SANITIZE_STRING);
+                  } 
+               
+               ?>
+
+               <!-- render -->
+               <h4>First Name: <?php echo $fname; ?></h4>
+               <h4>Last Name: <?php echo $lname; ?></h4>
 
             </div>
          </div>
@@ -43,10 +55,10 @@
             <div class="column column-60 column-offset-20">
                <form method="POST">
                   <label for="fname">First Name:</label>
-                  <input type="text" name="fname" id="fname">
+                  <input type="text" name="fname" id="fname" value="<?php echo $fname; ?>">
 
                   <label for="lname">Last Name:</label>
-                  <input type="text" name="lname" id="lname">
+                  <input type="text" name="lname" id="lname" value="<?php echo $lname; ?>">
 
                   <button type="submit">Submit</button>
                </form>
