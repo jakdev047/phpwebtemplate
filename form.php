@@ -32,6 +32,9 @@
                   // initialize
                   $fname = '';
                   $lname = '';
+                  $checked =  '';
+
+                  print_r($_POST);
                   
                   // validation
                   if( isset($_POST['fname']) && !empty($_POST['fname']) ) { 
@@ -42,6 +45,10 @@
                   if( isset($_POST['lname']) && !empty($_POST['lname']) ) { 
                      $lname = filter_input(INPUT_POST,'lname',FILTER_SANITIZE_STRING);
                   } 
+
+                  if( isset($_POST['cb1']) && $_POST['cb1']==1 ) {
+                     $checked =  'checked';
+                  }
                
                ?>
 
@@ -59,6 +66,9 @@
 
                   <label for="lname">Last Name:</label>
                   <input type="text" name="lname" id="lname" value="<?php echo $lname; ?>">
+
+                  <input type="checkbox" name="cb1" id="cb1" value="1" <?php echo $checked; ?> >
+                  <label for="cb1" class="label-inline">Terms & Condition</label> <br>
 
                   <button type="submit">Submit</button>
                </form>
