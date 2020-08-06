@@ -1,5 +1,6 @@
 <?php
    header('X-XSS-Protection:0');
+   include_once 'function.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,8 +34,7 @@
                   $fname = '';
                   $lname = '';
                   $checked =  '';
-
-                  print_r($_POST);
+                  $skills = '';
                   
                   // validation
                   if( isset($_POST['fname']) && !empty($_POST['fname']) ) { 
@@ -49,13 +49,21 @@
                   if( isset($_POST['cb1']) && $_POST['cb1']==1 ) {
                      $checked =  'checked';
                   }
+
+                  if( isset($_POST['skills']) ) {
+                     $skills = $_POST['skills'];
+                  }
                
                ?>
 
                <!-- render -->
                <h4>First Name: <?php echo $fname; ?></h4>
                <h4>Last Name: <?php echo $lname; ?></h4>
-
+               <ul>
+                  <?php foreach( $skills as $skill) { ?>
+                     <li> <?php echo $skill; ?> </li>
+                  <?php  } ?>
+               </ul>
             </div>
          </div>
          <div class="row">
@@ -69,6 +77,24 @@
 
                   <input type="checkbox" name="cb1" id="cb1" value="1" <?php echo $checked; ?> >
                   <label for="cb1" class="label-inline">Terms & Condition</label> <br>
+
+                  <!-- group checked -->
+                  <label class="label">Select Some Skills</label>
+
+                  <input type="checkbox" name="skills[]" value="html5" <?php isChecked('skills','html5') ?> >
+                  <label for="cb1" class="label-inline">HTML5</label> <br>
+
+                  <input type="checkbox" name="skills[]" value="css3" <?php isChecked('skills','css3') ?> >
+                  <label for="cb1" class="label-inline">CSS3</label> <br>
+
+                  <input type="checkbox" name="skills[]" value="sass" <?php isChecked('skills','sass') ?> >
+                  <label for="cb1" class="label-inline">SASS</label> <br>
+
+                  <input type="checkbox" name="skills[]" value="javascrip" <?php isChecked('skills','javascrip') ?> >
+                  <label for="cb1" class="label-inline">JavaScript</label> <br>
+
+                  <input type="checkbox" name="skills[]" value="php" <?php isChecked('skills','php') ?> >
+                  <label for="cb1" class="label-inline">PHP7</label> <br>
 
                   <button type="submit">Submit</button>
                </form>
