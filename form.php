@@ -35,6 +35,7 @@
                   $lname = '';
                   $checked =  '';
                   $skills = '';
+                  $fruits = ['Banana','lemon','Mango','orange'];
                   
                   // validation
                   if( isset($_POST['fname']) && !empty($_POST['fname']) ) { 
@@ -59,6 +60,13 @@
                <!-- render -->
                <h4>First Name: <?php echo $fname; ?></h4>
                <h4>Last Name: <?php echo $lname; ?></h4>
+               <h4>
+                  <?php
+                     if(isset($_POST['fruits']) && $_POST['fruits']!="") {
+                        printf("you have selected: %s",filter_input(INPUT_POST,'fruits',FILTER_SANITIZE_STRING));
+                     }
+                  ?>
+               </h4>
                <ul>
                   <?php foreach( $skills as $skill) { ?>
                      <li> <?php echo $skill; ?> </li>
@@ -77,6 +85,12 @@
 
                   <input type="checkbox" name="cb1" id="cb1" value="1" <?php echo $checked; ?> >
                   <label for="cb1" class="label-inline">Terms & Condition</label> <br>
+
+                  <!-- select -->
+                  <label for="fruits">Select Some Fruits</label>
+                  <select  name="fruits" id="fruits">
+                     <?php displayOptions($fruits) ?>
+                  </select>
 
                   <!-- group checked -->
                   <label class="label">Select Some Skills</label>
