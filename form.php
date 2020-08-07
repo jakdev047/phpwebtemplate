@@ -36,6 +36,7 @@
                   $checked =  '';
                   $skills = '';
                   $fruits = ['Banana','lemon','Mango','orange'];
+                  $sfruits = '';
                   
                   // validation
                   if( isset($_POST['fname']) && !empty($_POST['fname']) ) { 
@@ -62,8 +63,10 @@
                <h4>Last Name: <?php echo $lname; ?></h4>
                <h4>
                   <?php
-                     if(isset($_POST['fruits']) && $_POST['fruits']!="") {
-                        printf("you have selected: %s",filter_input(INPUT_POST,'fruits',FILTER_SANITIZE_STRING));
+                     // $sfruits = filter_input(INPUT_POST,'fruits',FILTER_SANITIZE_STRING,FILTER_REQUIRE_ARRAY);
+                     $sfruits = $_POST['fruits'] ?? array();
+                     if(count($sfruits)>0) {
+                        echo "you have selected:".join(',',$sfruits);
                      }
                   ?>
                </h4>
@@ -88,8 +91,8 @@
 
                   <!-- select -->
                   <label for="fruits">Select Some Fruits</label>
-                  <select  name="fruits" id="fruits">
-                     <?php displayOptions($fruits) ?>
+                  <select  name="fruits[]" id="fruits" multiple>
+                     <?php displayOptions($fruits,$fruits) ?>
                   </select>
 
                   <!-- group checked -->
